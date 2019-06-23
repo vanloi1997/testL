@@ -67,9 +67,64 @@
     <script type="text/javascript" language="javascript" src="admin_asset/ckeditor/ckeditor.js" ></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-   
+    
     @yield('script')
     
+
+    <script>
+        $(document).ready(function(){
+            $('#dataTables-example').DataTable({
+                responsive:true,
+                ajax :{
+                    url: "theloai/danhsachajax",
+                    // success: function(response){
+                    //     console.log(response);
+                    // //$('#dataTables-example').DataTable().ajax.reload(); 
+                    // },
+                    // error: function(jqXHR, textStatus, errorThrown) { 
+                    //     console.log(JSON.stringify(jqXHR));
+                    //     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    // }
+                }
+                
+            })
+            
+        })
+
+        function suatheloai(id){
+            $.ajax({
+            method: 'GET', 
+            url: 'theloai/sua/' + id,
+            success: function(response){
+                $("#myModal1").modal("show");
+                var obj = JSON.parse(response);
+                $("#txtName1").val(obj.ten);
+                $("#txtid").val(obj.id);
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        }); 
+        }
+
+        function xoatheloai(id){
+            $.ajax({
+            method: 'GET', 
+            url: 'theloai/xoa/' + id,
+            success: function(response){
+                //var obj = JSON.parse(response);
+                console.log(response);
+                $('#dataTables-example').DataTable().ajax.reload(); 
+                alert('Xóa Thành Công');
+               //$("#txtid").val(obj.id);
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        })
+        }
+    </script>
 </body>
 </html>

@@ -69,7 +69,7 @@
                             <strong>{{ session('message') }}</strong>
                         </div>
                     @endif
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                         <thead>
                             <tr align="center">
                                 <th class="text-center">ID</th>
@@ -110,4 +110,5 @@
                                         </div>
 
 @endsection
+
 

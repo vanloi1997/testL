@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Loaitin;
+use App\Theloai;
 class LoaitinController extends Controller
 {
     /**
@@ -14,9 +15,10 @@ class LoaitinController extends Controller
     public function getDS()
     {
         //
-        return view('loaitin');
+        $loaitin= Loaitin::all();
+        return view('loaitin',['loaitin'=>$loaitin]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *

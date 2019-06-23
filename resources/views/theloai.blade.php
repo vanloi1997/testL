@@ -13,8 +13,7 @@
                         
                     </div>
 
-                    <form action="{{ action('TheloaiController@store')  }}" method="POST">
-                       {{csrf_field() }}
+                    <!-- //form add the loai -->
                             <div class="modal" id="myModal">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
@@ -27,20 +26,6 @@
                                     
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                    @if(count($errors) > 0)
-                                        <div class="alert alert-danger">
-                                            @foreach($errors->all() as $err)
-                                                <strong>{{$err}}</strong><br>
-                                            @endforeach
-                                        </div>
-                                    @endif
-
-                                    <!-- Thông báo công việc đã được thực hiện -->
-                                    @if(session('message'))
-                                        <div class="alert alert-success">
-                                            <strong>{{session('message')}}</strong>
-                                        </div>
-                                    @endif
                                             <div class="form-group">
                                                 <p><label>Tên Thể Loại</label></p>
                                                 <input class="form-control input-width" name="ten" id="txtName" placeholder="Nhập tên Thể Loại.." />
@@ -60,7 +45,43 @@
                                 </div>
                                 </div>
                             </div>
-                    </form>
+
+
+                            <!-- form sua the loai -->
+                            <div class="modal" id="myModal1">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Sửa Thể Loại</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                            <div class="form-group">
+                                                <p><label>Tên Thể Loại</label></p>
+                                                <input class="form-control input-width" name="ten" id="txtName1"  />
+                                                <input class="hide" id="txtid"/>
+                                            </div>
+                                            
+                                            
+                                            <button type="button" class="btn btn-default" id="edit">Sửa</button>
+
+                                            
+                                        
+                                    </div>
+                                    
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </div>
+
+
                     <!-- /.col-lg-12 -->
                     <div class="clearfix"></div>
                     @if(session('message'))
@@ -70,6 +91,7 @@
                     @endif
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
+                        
                             <tr align="center">
                                 <th class="text-center">ID</th>
                                 <th class="text-center">Tên Thể Loại</th>
@@ -77,7 +99,6 @@
                                 <th class="text-center">Xóa</th>
                             </tr>
                         </thead>
-                        
                     </table>
                 </div>
                 <!-- /.row -->
@@ -89,26 +110,51 @@
 
         <!-- Modal -->
         <!-- Modal -->
-                                     <div style="text-align: left;" id="myModal1" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Xác Nhận</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                       <input type="text" id="txtidoxa"/>
-                                                    <div class="modal-footer">
-                                                        <button type="button" data-casetype="theloai" onclick="Xoatheloai()"  class="btn btn-default btnConf">Có</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                     
 
 @endsection
 
+
 @section('script')
-    
+    <script>
+        $("#add").click(function() {
+        var name = $('#txtName').val();
+        $.ajax({
+            method: 'POST', 
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: 'theloai/danhsach',
+            data: {'ten' : name,_token: '{{csrf_token()}}'},
+            success: function(response){
+                $('#dataTables-example').DataTable().ajax.reload(); 
+                $("#myModal").modal("hide");
+                alert('Thêm Thành Công');
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        }); 
+    });        
+    </script>
+    <script>
+        $("#edit").click(function() {
+        var name = $('#txtName1').val();
+        var id = $('#txtid').val();
+        $.ajax({
+            method: 'POST', 
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: 'theloai/sua',
+            data: {'ten' : name,'id':id,_token: '{{csrf_token()}}'},
+            success: function(response){
+                $('#dataTables-example').DataTable().ajax.reload(); 
+                $("#myModal1").modal("hide");
+                alert('Sửa Thành Công');
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        }); 
+    });        
+    </script>
 @endsection
