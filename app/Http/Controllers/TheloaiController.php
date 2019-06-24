@@ -12,11 +12,7 @@ class TheloaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDS()
-    {
-        //   
-        return view('theloai',['theloai'=>$theloai]);
-    }
+    
     public function getajax()
     {
         $theloai=Theloai::all();

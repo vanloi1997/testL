@@ -8,7 +8,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header modalll">Loại Tin
                             <small> Danh Sách</small>
-                            <button data-toggle="modal" data-target="#myModal" type="button" class="create_ca btn btn-success"><a style="text-decoration:none">Thêm Mới</a></button>
+                            <button onclick="LoadDataTL()" data-toggle="modal" type="button" class="create_ca btn btn-success"><a style="text-decoration:none">Thêm Mới</a></button>
                         </h1>
                         
                     </div>
@@ -40,14 +40,14 @@
                             @endif
                                     <div class="form-group">
                                         <p><label>Tên Thể Loại</label></p>
-                                        <input class="form-control input-width" name="cate_name" id="txtName" placeholder="Nhập tên Thể Loại.." />
+                                        <select  class="form-control" name="" style="width:226px" id="txtNameTL"></select>
                                     </div>
                                     <div class="form-group">
                                         <p><label>Nhập Tên Loại Tin</label></p>
-                                        <input class="form-control input-width" name="cate_name" id="txtName" placeholder="Nhập tên Loại Tin.." />
+                                        <input class="form-control input-width" name="cate_name" id="txtNameLT" placeholder="Nhập tên Loại Tin.." />
                                     </div>
                                     
-                                    <button type="button" class="btn btn-default" id="add">Thêm</button>
+                                    <button  type="button" class="btn btn-default" id="addloaitin">Thêm</button>
 
                                     
                                    
@@ -69,7 +69,7 @@
                             <strong>{{ session('message') }}</strong>
                         </div>
                     @endif
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example2">
                         <thead>
                             <tr align="center">
                                 <th class="text-center">ID</th>
@@ -112,3 +112,47 @@
 @endsection
 
 
+@section('script')
+<script>
+        $("#addloaitin").click(function() {
+        var name1 = $('#txtNameLT').val();
+        var name2 = $('#txtNameTL').val();
+        $.ajax({
+            method: 'POST', 
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: 'loaitin/danhsach',
+            data: {'ten' : name,_token: '{{csrf_token()}}'},
+            success: function(response){
+                $('#dataTables-example2').DataTable().ajax.reload(); 
+                $("#myModal").modal("hide");
+                alert('Thêm Thành Công');
+                //set value placeholder jquery
+                $("#txtName").val("");
+                $("#txtName").attr("placeholder","Nhập Tên Loại Tin..");
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        }); 
+    });  
+
+    function LoadDataTL(){
+        $("#myModal").modal("show");
+        $.ajax({
+            method: 'GET', 
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: 'loaitin/getTL',
+            success: function(response){
+                var obj = JSON.parse(response);
+                console.log(obj);
+
+            },              
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        }); 
+    }      
+</script>
+@endsection

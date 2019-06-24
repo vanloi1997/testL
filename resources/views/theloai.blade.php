@@ -28,7 +28,7 @@
                                     <div class="modal-body">
                                             <div class="form-group">
                                                 <p><label>Tên Thể Loại</label></p>
-                                                <input class="form-control input-width" name="ten" id="txtName" placeholder="Nhập tên Thể Loại.." />
+                                                <input class="form-control input-width"  id="txtName" placeholder="Nhập tên Thể Loại.." />
                                             </div>
                                             
                                             <button type="button" class="btn btn-default" id="add">Thêm</button>
@@ -89,7 +89,7 @@
                             <strong>{{ session('message') }}</strong>
                         </div>
                     @endif
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                         <thead>
                         
                             <tr align="center">
@@ -125,9 +125,12 @@
             url: 'theloai/danhsach',
             data: {'ten' : name,_token: '{{csrf_token()}}'},
             success: function(response){
-                $('#dataTables-example').DataTable().ajax.reload(); 
+                $('#dataTables-example1').DataTable().ajax.reload(); 
                 $("#myModal").modal("hide");
                 alert('Thêm Thành Công');
+                //set value placeholder jquery
+                $("#txtName").val("");
+                $("#txtName").attr("placeholder","Nhập Tên Thể Loại..");
             },
             error: function(jqXHR, textStatus, errorThrown) { 
                 console.log(JSON.stringify(jqXHR));

@@ -73,7 +73,7 @@
 
     <script>
         $(document).ready(function(){
-            $('#dataTables-example').DataTable({
+            $('#dataTables-example1').DataTable({
                 responsive:true,
                 ajax :{
                     url: "theloai/danhsachajax",
@@ -90,7 +90,24 @@
             })
             
         })
-
+        $(document).ready(function(){
+            $('#dataTables-example2').DataTable({
+                responsive:true,
+                ajax :{
+                    url: "loaitin/danhsachajax",
+                    // success: function(response){
+                    //     console.log(response);
+                    // //$('#dataTables-example').DataTable().ajax.reload(); 
+                    // },
+                    // error: function(jqXHR, textStatus, errorThrown) { 
+                    //     console.log(JSON.stringify(jqXHR));
+                    //     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    // }
+                }
+                
+            })
+            
+        })
         function suatheloai(id){
             $.ajax({
             method: 'GET', 

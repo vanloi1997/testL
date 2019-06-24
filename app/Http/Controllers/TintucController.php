@@ -83,3 +83,5 @@ class TintucController extends Controller
         //
     }
 }
+
+ 

@@ -26,10 +26,10 @@ Route::get('theloai/xoa/{id}','TheloaiController@Xoa');
 
 
 //Route Loại tin
-Route::get('loaitin/danhsach','LoaitinController@dsAjax');
-Route::get('loaitin/danhsach','LoaitinController@getDS');
-Route::get('loaitin/them','TheloaiController@Them');
-Route::post('loaitin/them','TheloaiController@XuLyThemTL');
+Route::get('loaitin/danhsachajax','LoaitinController@getajax');
+Route::get('loaitin/danhsach','LoaitinController@Them');
+Route::get('loaitin/getTL','LoaitinController@loadTLajax');
+Route::post('loaitin/danhsach','LoaitinController@XuLyThemTL');
 		// Route URL: admin/theloai/sua
 Route::get('loaitin/sua/{id}','TheloaiController@Sua');
 Route::post('loaitin/sua/{id}','TheloaiController@XuLySuaTL');

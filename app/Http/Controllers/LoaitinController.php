@@ -12,11 +12,70 @@ class LoaitinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDS()
+    public function getajax()
+    {
+        $loaitin=Loaitin::all();
+        
+        $data= array();
+        foreach ($loaitin as $lt) {
+            $theloai = Theloai::find($lt->idTheLoai);
+			$data[] = array(
+                $lt->id,
+                $theloai->ten,
+				$lt->ten,
+				'<button onclick="suatheloai('.$lt->id.')" class="create_ca btn btn-success"><a style="text-decoration:none" >Sửa</a></button>',
+                '<button onclick="xoatheloai('.$lt->id.')" class="create_ca btn btn-danger"><a style="text-decoration:none" id="xoatheloai">Xóa</a></button>'
+			);
+		}
+		$output = array(
+			"draw" => "",
+			"recordsTotal" => 100,
+			"recordsFiltered" => 100,
+			"data" => $data
+		);
+       // console.log("abc");
+		echo json_encode($output);
+		die();
+    }
+    public function loadTLajax(){
+        $theloai = Theloai::all();
+        echo $theloai;
+        die();
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function Them()
     {
         //
-        $loaitin= Loaitin::all();
-        return view('loaitin',['loaitin'=>$loaitin]);
+        return view('loaitin');
+    }
+    public function XuLyThemTL(Request $request)
+    {
+        $this->validate($request,[
+            'ten'=>'required',
+        ]);
+        $em = new Loaitin;
+        
+        $em -> ten =$request->input('ten');
+        $em->save();
+    }
+    public function Sua($id){
+        $theloai = Theloai::find($id);
+        echo $theloai;
+        die();
+    }
+    public function XuLySuaTL(Request $request){
+        $id = $request->input('id');
+    	$theloai = TheLoai::find($id);
+    	$this->validate($request,
+    		[
+    			'ten' => 'required'
+    		]);
+        $theloai->ten=$request->input('ten');
+    	$theloai->save();
     }
     
     /**
