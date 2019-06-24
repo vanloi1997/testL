@@ -149,7 +149,7 @@
             url: 'theloai/sua',
             data: {'ten' : name,'id':id,_token: '{{csrf_token()}}'},
             success: function(response){
-                $('#dataTables-example').DataTable().ajax.reload(); 
+                $('#dataTables-example1').DataTable().ajax.reload(); 
                 $("#myModal1").modal("hide");
                 alert('Sửa Thành Công');
             },

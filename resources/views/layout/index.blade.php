@@ -132,7 +132,7 @@
             success: function(response){
                 //var obj = JSON.parse(response);
                 console.log(response);
-                $('#dataTables-example').DataTable().ajax.reload(); 
+                $('#dataTables-example1').DataTable().ajax.reload(); 
                 alert('Xóa Thành Công');
                //$("#txtid").val(obj.id);
             },

@@ -146,7 +146,14 @@
             success: function(response){
                 var obj = JSON.parse(response);
                 console.log(obj);
-
+                var html ='';
+                $.each(obj,function(key,value){
+                    html +="<option value="">name<option>"
+                });
+                $('').append(html);
+                // $.each(selectValues, function(key, value) {   
+                //     $('#mySelect').append($("<option></option>").attr("value",key).text(value)); 
+                // });
             },              
             error: function(jqXHR, textStatus, errorThrown) { 
                 console.log(JSON.stringify(jqXHR));
